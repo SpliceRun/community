@@ -1,0 +1,116 @@
+# Example: Activepieces Community Edition (one app container + PostgreSQL + Redis).
+# Provided as-is, without warranty.
+# Start: copy .env.example to .env, fill in the secrets, then `docker compose up -d`.
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  activepieces:
+    image: ghcr.io/activepieces/activepieces:0.92.3
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      # One container runs the API, the web UI and the worker (the upstream default).
+      AP_CONTAINER_TYPE: WORKER_AND_APP
+      AP_EDITION: ce
+      AP_ENVIRONMENT: prod
+      AP_ENGINE_EXECUTABLE_PATH: dist/packages/engine/main.js
+      # UNSANDBOXED is the upstream default and needs no extra privileges.
+      # See README "Known limits" before inviting people you do not trust.
+      AP_EXECUTION_MODE: UNSANDBOXED
+      AP_FRONTEND_URL: ${AP_FRONTEND_URL:-http://localhost:8080}
+      AP_ENCRYPTION_KEY: ${AP_ENCRYPTION_KEY:?Set AP_ENCRYPTION_KEY in .env}
+      AP_JWT_SECRET: ${AP_JWT_SECRET:?Set AP_JWT_SECRET in .env}
+      AP_API_KEY: ${AP_API_KEY:?Set AP_API_KEY in .env}
+      AP_POSTGRES_HOST: postgres
+      AP_POSTGRES_PORT: "5432"
+      AP_POSTGRES_DATABASE: activepieces
+      AP_POSTGRES_USERNAME: activepieces
+      AP_POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      AP_REDIS_HOST: redis
+      AP_REDIS_PORT: "6379"
+      AP_WEBHOOK_TIMEOUT_SECONDS: "30"
+      AP_TELEMETRY_ENABLED: ${AP_TELEMETRY_ENABLED:-false}
+    ports:
+      # Loopback only. Put a reverse proxy (see ../caddy) in front for HTTPS.
+      - "127.0.0.1:${HOST_PORT:-8080}:80"
+    volumes:
+      - activepieces_cache:/usr/src/app/cache
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      # Lets the web server in the image listen on port 80.
+      - NET_BIND_SERVICE
+    healthcheck:
+      # Uses node (always present in this image) so no extra tools are needed.
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:80/',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    logging: *default-logging
+
+  postgres:
+    # The upstream compose file uses this pgvector build of PostgreSQL 14.
+    image: pgvector/pgvector:0.8.0-pg14
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: activepieces
+      POSTGRES_USER: activepieces
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U activepieces -d activepieces"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *default-logging
+
+  redis:
+    image: redis:7.4.11-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      # DAC_OVERRIDE lets the entrypoint (root) read the redis-owned data directory
+      # again on restart; without it Redis fails to start the second time.
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *default-logging
+
+volumes:
+  activepieces_cache:
+  postgres_data:
+  redis_data:

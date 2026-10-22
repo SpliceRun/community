@@ -1,0 +1,24 @@
+# Minimal reverse proxy with automatic HTTPS. Provided as-is, without warranty.
+# The three values come from .env (see .env.example):
+#   DOMAIN      the domain you own, e.g. app.example.com
+#   UPSTREAM    where the app listens on this machine, e.g. 127.0.0.1:5678
+#   ACME_EMAIL  contact address for the certificate authority
+{
+	email {$ACME_EMAIL}
+	# Admin API off: nothing on this machine can reconfigure Caddy.
+	# To apply a changed Caddyfile run: docker compose restart caddy
+	admin off
+}
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		-Server
+	}
+
+	# WebSocket and streaming connections work without extra settings.
+	reverse_proxy {$UPSTREAM}
+}

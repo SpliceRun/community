@@ -1,0 +1,105 @@
+# Example: Huginn (web + background worker + PostgreSQL), single-process image.
+# Provided as-is, without warranty.
+# Start: copy .env.example to .env, fill in the secrets, then `docker compose up -d`.
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-huginn-env: &huginn-env
+  RAILS_ENV: production
+  DATABASE_ADAPTER: postgresql
+  DATABASE_HOST: postgres
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: huginn
+  DATABASE_USERNAME: huginn
+  DATABASE_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+  APP_SECRET_TOKEN: ${APP_SECRET_TOKEN:?Set APP_SECRET_TOKEN in .env}
+  DOMAIN: ${DOMAIN:-localhost:3000}
+  FORCE_SSL: ${FORCE_SSL:-false}
+  TIMEZONE: ${TIMEZONE:-UTC}
+  INVITATION_CODE: ${INVITATION_CODE:?Set INVITATION_CODE in .env}
+  # Starts the bundled Smokescreen egress proxy and sends all agent HTTP(S)
+  # requests through it, which is meant to keep agents away from private / link-local
+  # addresses (not tested).
+  ENABLE_SMOKESCREEN: ${ENABLE_SMOKESCREEN:-true}
+
+services:
+  web:
+    image: huginn/huginn-single-process:v2026.10.14
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      <<: *huginn-env
+      # Only used the first time, when the database is empty.
+      SEED_USERNAME: ${SEED_USERNAME:-admin}
+      SEED_PASSWORD: ${SEED_PASSWORD:?Set SEED_PASSWORD in .env}
+    ports:
+      # Loopback only. Put a reverse proxy (see ../caddy) in front for HTTPS.
+      - "127.0.0.1:${HOST_PORT:-3000}:3000"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      # Uses ruby (always present in this image). The header avoids the HTTPS
+      # redirect when FORCE_SSL=true; any answer below 500 counts as alive.
+      test: ["CMD", "ruby", "-rnet/http", "-e", "r=Net::HTTP.get_response(URI('http://127.0.0.1:3000/'),{'X-Forwarded-Proto'=>'https'}); exit(r.code.to_i<500 ? 0 : 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    logging: *default-logging
+
+  worker:
+    image: huginn/huginn-single-process:v2026.10.14
+    restart: unless-stopped
+    # Runs the background job runner. Compose starts it only after the web
+    # container reports healthy, that is after the web health check below has
+    # passed (the front page answers). This gives the web container time to set
+    # up the database first, but the health check itself does not prove that.
+    command: ["/scripts/init", "bin/threaded.rb"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+    environment:
+      <<: *huginn-env
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging: *default-logging
+
+  postgres:
+    image: postgres:16.15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: huginn
+      POSTGRES_USER: huginn
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U huginn -d huginn"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *default-logging
+
+volumes:
+  postgres_data:

@@ -21,7 +21,8 @@ jobs:
       #   1. private-key header lines,
       #   2. IPv4-looking strings outside the documentation ranges,
       #   3. email addresses other than support@splicerun.com, example domains and GitHub noreply
-      #      addresses,
+      #      addresses, with one single-address exception: user@automatisch.io, the upstream
+      #      default login of Automatisch, which examples/automatisch/README.md names on purpose,
       # plus, in the lockfile, any resolved download URL not on registry.npmjs.org.
       # It does not detect secrets in general, personal data, or private content.
       - name: Lightweight pattern check (not a full secret scan)
@@ -36,7 +37,7 @@ jobs:
           fi
           ip=$(scan -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | grep -vE '^(192\.0\.2|198\.51\.100|203\.0\.113)\.[0-9]+$|^(127\.0\.0\.1|0\.0\.0\.0|1\.1\.1\.1|8\.8\.8\.8)$' || true)
           if [ -n "$ip" ]; then echo "::error::IPv4 address outside documentation ranges:"; echo "$ip"; fail=1; fi
-          mail=$(scan -oiE '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}' | grep -viE '^support@splicerun\.com$|@example\.(com|org|net)$|@users\.noreply\.github\.com$' || true)
+          mail=$(scan -oiE '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}' | grep -viE '^support@splicerun\.com$|@example\.(com|org|net)$|@users\.noreply\.github\.com$|^user@automatisch\.io$' || true)
           if [ -n "$mail" ]; then echo "::error::unexpected email address:"; echo "$mail"; fail=1; fi
           # Lockfile: every resolved URL must be on registry.npmjs.org.
           if [ -f "$lock" ]; then
@@ -45,6 +46,27 @@ jobs:
           else
             echo "::error::$lock is missing"; fail=1
           fi
+          exit $fail
+
+      # Checks that every example compose file is valid. It writes a throwaway env file in a
+      # temporary folder (every empty value in .env.example gets a dummy value) and runs
+      # `docker compose config -q`. It starts nothing and pulls no images.
+      - name: Validate example compose files
+        run: |
+          set -eu
+          tmp=$(mktemp -d)
+          fail=0
+          for f in examples/*/compose.yaml; do
+            d=$(dirname "$f")
+            env="$tmp/$(basename "$d").env"
+            sed -E 's/^([A-Za-z_][A-Za-z0-9_]*)=[[:space:]]*$/\1=dummy-value-for-ci/' "$d/.env.example" > "$env"
+            if docker compose --env-file "$env" -f "$f" config -q; then
+              echo "ok: $f"
+            else
+              echo "::error::invalid compose file: $f"; fail=1
+            fi
+          done
+          rm -rf "$tmp"
           exit $fail
 
       # actions/setup-node v7.1.0

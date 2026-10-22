@@ -1,5 +1,5 @@
 name: Bug
-description: Something in the documentation site does not work as described.
+description: Something in the documentation site or in an example does not work as described.
 labels: ["bug"]
 body:
   - type: markdown

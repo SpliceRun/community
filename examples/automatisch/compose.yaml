@@ -1,0 +1,129 @@
+# Example: Automatisch (web/API container + worker + PostgreSQL + Redis).
+# Provided as-is, without warranty.
+# Start: copy .env.example to .env, fill in the secrets, then `docker compose up -d`.
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-automatisch-env: &automatisch-env
+  APP_ENV: production
+  HOST: ${AUTOMATISCH_HOST:-localhost}
+  PROTOCOL: ${AUTOMATISCH_PROTOCOL:-http}
+  PORT: "3000"
+  WEB_APP_URL: ${WEB_APP_URL:-http://localhost:3000}
+  WEBHOOK_URL: ${WEBHOOK_URL:-http://localhost:3000}
+  ENCRYPTION_KEY: ${ENCRYPTION_KEY:?Set ENCRYPTION_KEY in .env}
+  WEBHOOK_SECRET_KEY: ${WEBHOOK_SECRET_KEY:?Set WEBHOOK_SECRET_KEY in .env}
+  APP_SECRET_KEY: ${APP_SECRET_KEY:?Set APP_SECRET_KEY in .env}
+  POSTGRES_HOST: postgres
+  POSTGRES_PORT: "5432"
+  POSTGRES_DATABASE: automatisch
+  POSTGRES_USERNAME: automatisch
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+  POSTGRES_ENABLE_SSL: "false"
+  REDIS_HOST: redis
+  REDIS_PORT: "6379"
+  TELEMETRY_ENABLED: ${TELEMETRY_ENABLED:-false}
+
+services:
+  main:
+    image: automatischio/automatisch:0.15.0
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      <<: *automatisch-env
+    ports:
+      # Loopback only. Put a reverse proxy (see ../caddy) in front for HTTPS.
+      - "127.0.0.1:${HOST_PORT:-3000}:3000"
+    volumes:
+      - automatisch_storage:/automatisch/storage
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      # Uses node (always present in this image) so no extra tools are needed.
+      test: ["CMD", "node", "-e", "require('http').get('http://127.0.0.1:3000/',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    logging: *default-logging
+
+  worker:
+    image: automatischio/automatisch:0.15.0
+    restart: unless-stopped
+    depends_on:
+      main:
+        condition: service_healthy
+    environment:
+      <<: *automatisch-env
+      WORKER: "true"
+    volumes:
+      - automatisch_storage:/automatisch/storage
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging: *default-logging
+
+  postgres:
+    image: postgres:16.15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: automatisch
+      POSTGRES_USER: automatisch
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U automatisch -d automatisch"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *default-logging
+
+  redis:
+    image: redis:7.4.11-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      # DAC_OVERRIDE lets the entrypoint (root) read the redis-owned data directory
+      # again on restart; without it Redis fails to start the second time.
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *default-logging
+
+volumes:
+  automatisch_storage:
+  postgres_data:
+  redis_data:

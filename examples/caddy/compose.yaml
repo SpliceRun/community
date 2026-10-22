@@ -1,0 +1,36 @@
+# Example: Caddy as an HTTPS reverse proxy in front of one app on the same Linux machine.
+# Provided as-is, without warranty.
+# Start: copy .env.example to .env, set DOMAIN / UPSTREAM / ACME_EMAIL, then `docker compose up -d`.
+#
+# network_mode: host (Linux only) lets Caddy reach the app on 127.0.0.1:<port>, where
+# every example in this folder publishes it, and lets Caddy listen on ports 80 and 443
+# itself. Do not combine it with `ports:`.
+services:
+  caddy:
+    image: caddy:2.11.7-alpine
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+      UPSTREAM: ${UPSTREAM:?Set UPSTREAM in .env}
+      ACME_EMAIL: ${ACME_EMAIL:?Set ACME_EMAIL in .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  # Holds the certificates. Back it up or you will request new ones after a rebuild.
+  caddy_data:
+  caddy_config:
