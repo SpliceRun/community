@@ -1,0 +1,101 @@
+---
+title: SpliceRun documentation
+description: Managed hosting for n8n - how it works, where the boundaries are, and what to do when something breaks.
+slug: /
+hide_title: true
+sidebar_label: Welcome
+sidebar_position: 0
+---
+
+import Link from '@docusaurus/Link';
+
+<div className="sr-home__intro">
+
+# SpliceRun documentation
+
+We run your automation app so you can build workflows instead of babysitting
+Docker, certificates and night-time restarts. The app today is **n8n**, on Bring your own server, the plan you can order today (Shared and Dedicated are described for reference but are not open for orders). These pages cover how that works, exactly where our responsibility ends and yours
+begins, and what to do at 11pm when something has stopped.
+
+</div>
+
+These pages describe the free early-access service. Terms: see [How pricing works](./billing/how-pricing-works.md).
+
+## Start here
+
+<div className="sr-cards sr-cards--lead">
+  <Link className="sr-card" to="/getting-started/quickstart">
+    <span className="sr-card__kicker">New to SpliceRun</span>
+    <span className="sr-card__title">Quickstart</span>
+    <span className="sr-card__body">Account, lane, first instance - in the order you actually do them.</span>
+  </Link>
+  <Link className="sr-card" to="/plans/choosing-a-plan">
+    <span className="sr-card__kicker">Deciding</span>
+    <span className="sr-card__title">Choosing a plan</span>
+    <span className="sr-card__body">Shared, Dedicated and Bring your own server suit genuinely different situations.</span>
+  </Link>
+  <Link className="sr-card" to="/apps/n8n">
+    <span className="sr-card__kicker"><span className="sr-app-mark sr-app-mark--n8n">n8n</span> Apps</span>
+    <span className="sr-card__title">n8n</span>
+    <span className="sr-card__body">Workflow automation. The app SpliceRun runs today.</span>
+  </Link>
+  <Link className="sr-card" to="/apps/n8n/migrate-an-existing-n8n">
+    <span className="sr-card__kicker">Already running n8n</span>
+    <span className="sr-card__title">Migrating in</span>
+    <span className="sr-card__body">Move a working instance off your own VPS, Coolify, Railway or Render.</span>
+  </Link>
+</div>
+
+## Browse by topic
+
+<div className="sr-cards">
+  <Link className="sr-card" to="/plans">
+    <span className="sr-card__title">Hosting plans</span>
+    <span className="sr-card__body">The three lanes, and the exact line between what we manage and what you manage.</span>
+  </Link>
+  <Link className="sr-card" to="/apps">
+    <span className="sr-card__title">Apps</span>
+    <span className="sr-card__body">Everything specific to n8n. Anything true whichever app you run lives outside this section.</span>
+  </Link>
+  <Link className="sr-card" to="/networking">
+    <span className="sr-card__title">Networking &amp; domains</span>
+    <span className="sr-card__body">How your instance reaches the internet, and how the internet reaches it.</span>
+  </Link>
+  <Link className="sr-card" to="/data">
+    <span className="sr-card__title">Your data</span>
+    <span className="sr-card__body">Moving data in, backups while it is here, and a complete copy out whenever you want one.</span>
+  </Link>
+  <Link className="sr-card" to="/billing">
+    <span className="sr-card__title">Billing &amp; account</span>
+    <span className="sr-card__body">What you pay for, what costs extra, and what happens if you cancel or stop paying.</span>
+  </Link>
+  <Link className="sr-card" to="/security">
+    <span className="sr-card__title">Security</span>
+    <span className="sr-card__body">How instances are isolated, and who at SpliceRun can reach your data.</span>
+  </Link>
+  <Link className="sr-card" to="/troubleshooting">
+    <span className="sr-card__title">Troubleshooting</span>
+    <span className="sr-card__body">Organised by symptom, not by subsystem. Start from what you are seeing.</span>
+  </Link>
+</div>
+
+## Most-read pages
+
+- [What we manage](./plans/what-we-manage.md) - the do / you-do table, including
+  what is deliberately **not** included
+- [How pricing works](./billing/how-pricing-works.md) - the structure behind the
+  numbers on the pricing page
+- [Outbound connections and DNS](./networking/outbound-connections.md) - read
+  this before your first HTTP Request node
+- [Backups and recovery](./data/backups-and-recovery.md) - what is captured,
+  how often, and how to get it back
+- [Billing, cancellation and data policy](./billing/cancellation-data-policy.md) - nothing is deleted without notice and a window to fix it
+- [n8n is slow or using high CPU](./apps/n8n/slow-or-high-cpu.md) - how
+  to tell a workload problem from a plan problem
+
+## Still stuck?
+
+Search the whole site from the box in the header. If the answer is not here,
+[open a support ticket](https://app.splicerun.com/dashboard/support) from your dashboard - and
+tell us what you searched for, so the page you needed gets written. See
+[Getting help](./troubleshooting/getting-help.md).

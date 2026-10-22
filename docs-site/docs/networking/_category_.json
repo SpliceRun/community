@@ -1,0 +1,10 @@
+{
+  "label": "Networking & domains",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "slug": "/networking",
+    "title": "Networking & domains",
+    "description": "How your instance reaches the internet, and how the internet reaches your instance."
+  }
+}

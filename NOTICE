@@ -1,0 +1,45 @@
+SpliceRun community
+Copyright 2026 SpliceRun (the repository owner)
+
+This product includes material from the following third parties.
+
+Geist (docs-site/static/fonts/ and fonts/geist/)
+  Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font)
+  Licensed under the SIL Open Font License, Version 1.1. See fonts/geist/OFL.txt and docs-site/static/fonts/OFL-geist.txt.
+
+Docusaurus (docs-site/src/theme/MDXComponents/Img/ and the Docusaurus-derived site scaffolding in docs-site/)
+  The component above was swizzled (copied and modified) from @docusaurus/theme-classic, and the site
+  scaffolding (configuration, sidebar and starter structure) derives from the Docusaurus template.
+  Source: https://github.com/facebook/docusaurus
+  Licensed under the MIT License, reproduced in full:
+
+    MIT License
+
+    Copyright (c) Facebook, Inc. and its affiliates.
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+Licence texts
+  LICENSE is the Apache License, Version 2.0, as published at
+  https://www.apache.org/licenses/LICENSE-2.0.txt
+  LICENSE-docs is the Creative Commons Attribution 4.0 International legal code, as published at
+  https://creativecommons.org/licenses/by/4.0/legalcode.txt
+  Their texts are unmodified.
+
+"SpliceRun" and the SpliceRun logo are marks of their owner and are not licensed by this NOTICE. See BRAND.md.

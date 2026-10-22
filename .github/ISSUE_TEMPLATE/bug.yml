@@ -1,0 +1,26 @@
+name: Bug
+description: Something in the documentation site does not work as described.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include secrets, personal data or customer data. For security problems, follow SECURITY.md instead.
+        Maintenance is intermittent; issue replies have no guaranteed timeframe.
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: File or page the problem is in.
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce

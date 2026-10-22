@@ -1,0 +1,10 @@
+{
+  "label": "Hosting plans",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "/plans",
+    "title": "Hosting plans",
+    "description": "Shared, Dedicated and Bring your own server are not tiers of the same thing; they suit different situations. This section covers how to choose, and exactly where our responsibility ends and yours begins."
+  }
+}

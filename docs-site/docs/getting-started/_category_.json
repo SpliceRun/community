@@ -1,0 +1,11 @@
+{
+  "label": "Getting started",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "slug": "/getting-started",
+    "title": "Getting started",
+    "description": "Create an account, pick a lane, and get your first automation instance running."
+  }
+}

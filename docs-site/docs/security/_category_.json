@@ -1,0 +1,10 @@
+{
+  "label": "Security",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "slug": "/security",
+    "title": "Security",
+    "description": "How instances are isolated from each other, and who at SpliceRun can reach your data."
+  }
+}

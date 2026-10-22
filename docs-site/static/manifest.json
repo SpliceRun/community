@@ -1,0 +1,16 @@
+{
+  "name": "SpliceRun Documentation",
+  "short_name": "SpliceRun Docs",
+  "description": "Setup guides, hosting plans, and troubleshooting for SpliceRun managed n8n hosting, installable for offline reading.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121211",
+  "theme_color": "#121211",
+  "icons": [
+    {
+      "src": "/img/favicon-placeholder.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

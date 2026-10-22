@@ -1,0 +1,10 @@
+{
+  "label": "Your account",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "slug": "/account",
+    "title": "Your account",
+    "description": "Managing your instances day-to-day, your team, add-ons, and account security."
+  }
+}

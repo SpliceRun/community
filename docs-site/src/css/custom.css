@@ -1,0 +1,753 @@
+/**
+ * SpliceRun docs - global theme.
+ *
+ * Light: warm paper with a green link colour. Dark: graphite with bone for
+ * emphasis and no accent hue. Colour otherwise means status (admonitions).
+ */
+
+/* ---------------------------------------------------------------- typeface */
+/* Self-hosted so no reader's IP reaches a font CDN. */
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/geist-sans-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono-variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------ light (paper) */
+:root {
+  --sr-paper: #fbfaf7;
+  --sr-paper-alt: #f4f2ec;
+  --sr-card: #ffffff;
+  --sr-well: #efede6;
+  --sr-line: #e3e0d8;
+  --sr-line-soft: #edebe4;
+  --sr-fg: #191917;
+  --sr-fg-body: #3a3a35;
+  --sr-fg-mute: #6b6960;
+  --sr-accent: #187146;
+  --sr-accent-strong: #0f5735;
+  --sr-accent-tint: #e8f2ec;
+  --sr-on-accent: #ffffff;
+  --sr-mark: #f7e3ad;
+  --sr-shadow-card: 0 1px 2px rgb(25 25 23 / 6%), 0 8px 24px -20px rgb(25 25 23 / 30%);
+  --sr-shadow-lift: 0 2px 4px rgb(25 25 23 / 8%), 0 16px 32px -22px rgb(25 25 23 / 38%);
+
+  /* type */
+  --ifm-font-family-base: 'Geist', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, sans-serif;
+  --ifm-font-family-monospace: 'Geist Mono', ui-monospace, 'Cascadia Mono',
+    'SF Mono', Menlo, monospace;
+  --ifm-font-size-base: 16px;
+  --ifm-line-height-base: 1.65;
+  --ifm-heading-font-weight: 600;
+  --ifm-h1-font-size: 2.25rem;
+  --ifm-h2-font-size: 1.5rem;
+  --ifm-h3-font-size: 1.1875rem;
+  --ifm-code-font-size: 88%;
+
+  /* geometry — 8px is the product radius */
+  --ifm-global-radius: 8px;
+  --ifm-button-border-radius: 8px;
+  --ifm-code-border-radius: 5px;
+
+  /* Infima primary ramp, driven off the marketing green */
+  --ifm-color-primary: #187146;
+  --ifm-color-primary-dark: #146039;
+  --ifm-color-primary-darker: #115433;
+  --ifm-color-primary-darkest: #0c3f26;
+  --ifm-color-primary-light: #1c8253;
+  --ifm-color-primary-lighter: #1f8e5b;
+  --ifm-color-primary-lightest: #2aa66d;
+
+  /* surfaces + ink */
+  --ifm-background-color: var(--sr-paper);
+  --ifm-background-surface-color: var(--sr-card);
+  --ifm-font-color-base: var(--sr-fg-body);
+  --ifm-heading-color: var(--sr-fg);
+  --ifm-color-content-secondary: var(--sr-fg-mute);
+  --ifm-link-color: var(--sr-accent);
+  --ifm-link-hover-color: var(--sr-accent-strong);
+
+  --ifm-navbar-background-color: rgb(251 250 247 / 82%);
+  --ifm-navbar-shadow: none;
+  --ifm-navbar-link-color: var(--sr-fg-body);
+  --ifm-navbar-link-hover-color: var(--sr-fg);
+  --ifm-navbar-height: 3.75rem;
+
+  --ifm-footer-background-color: var(--sr-paper-alt);
+  --ifm-footer-color: var(--sr-fg-body);
+  --ifm-footer-link-color: var(--sr-fg-body);
+  --ifm-footer-link-hover-color: var(--sr-accent);
+  --ifm-footer-title-color: var(--sr-fg);
+
+  --ifm-menu-color: var(--sr-fg-body);
+  --ifm-menu-color-active: var(--sr-fg);
+  --ifm-menu-color-background-active: var(--sr-paper-alt);
+  --ifm-menu-color-background-hover: var(--sr-paper-alt);
+
+  --ifm-toc-border-color: var(--sr-line);
+  --ifm-hr-background-color: var(--sr-line);
+  --ifm-table-border-color: var(--sr-line);
+  --ifm-table-head-background: var(--sr-paper-alt);
+  --ifm-table-stripe-background: transparent;
+  --ifm-blockquote-color: var(--sr-fg-mute);
+  --ifm-blockquote-border-color: var(--sr-line);
+
+  --ifm-code-background: var(--sr-well);
+  --ifm-code-color: var(--sr-fg);
+  --ifm-pre-background: var(--sr-well);
+  --docusaurus-highlighted-code-line-bg: rgb(24 113 70 / 12%);
+
+  --ifm-breadcrumb-color-active: var(--sr-fg);
+  --ifm-breadcrumb-item-background-active: var(--sr-paper-alt);
+}
+
+/* --------------------------------------------------------- dark (graphite) */
+[data-theme='dark'] {
+  --sr-paper: #121211;
+  --sr-paper-alt: #1a1a18;
+  --sr-card: #1a1a18;
+  --sr-well: #0c0c0b;
+  --sr-line: #2e2e2b;
+  --sr-line-soft: #232320;
+  --sr-fg: #e7e6e2;
+  --sr-fg-body: #cfccc4;
+  --sr-fg-mute: #918f87;
+  /* Bone, not a hue. This is the whole point of the dark ground: the only
+     chroma left on screen belongs to status, so status reads instantly. */
+  --sr-accent: #f2f1ed;
+  /* Hover end of the accent: one step down the bone ramp, no flash to white. */
+  --sr-accent-strong: #e4e1d9;
+  --sr-accent-tint: #232320;
+  --sr-on-accent: #121211;
+  /* Same role, sized for a dark ground: a tint of the console's warn stop. */
+  --sr-mark: #4a3d1c;
+  --sr-shadow-card: 0 1px 0 rgb(255 255 255 / 5%) inset;
+  --sr-shadow-lift: 0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 16px 40px -24px rgb(0 0 0 / 80%);
+
+  --ifm-color-primary: #f2f1ed;
+  --ifm-color-primary-dark: #e4e1d9;
+  --ifm-color-primary-darker: #cfccc4;
+  --ifm-color-primary-darkest: #aba9a2;
+  --ifm-color-primary-light: #f8f7f4;
+  --ifm-color-primary-lighter: #fbfaf8;
+  --ifm-color-primary-lightest: #ffffff;
+
+  --ifm-navbar-background-color: rgb(18 18 17 / 82%);
+  --ifm-table-head-background: var(--sr-line-soft);
+  --docusaurus-highlighted-code-line-bg: rgb(242 241 237 / 10%);
+
+  /* Infima's default emphasis ramp is blue-tinted. Replace it with warm greys of
+     matched relative luminance (hue only, so weight and contrast are unchanged);
+     these values paint the hover states of the colour-mode switch, back-to-top
+     button and navbar search input in dark mode. */
+  --ifm-color-emphasis-100: #201f1d;
+  --ifm-color-emphasis-200: #4a4844;
+  --ifm-color-emphasis-300: #686660;
+  --ifm-color-emphasis-400: #97948c;
+  --ifm-color-emphasis-500: #c6c3bb;
+  --ifm-color-emphasis-600: #d3d0c8;
+  --ifm-color-emphasis-700: #dfddd5;
+  --ifm-color-emphasis-800: #efede5;
+  --ifm-color-emphasis-900: #f7f6ee;
+  --ifm-color-gray-800: #4a4844;
+  --ifm-color-gray-900: #201f1d;
+  --ifm-color-secondary: #efede5;
+}
+
+/* ------------------------------------------------------------------- base */
+html {
+  background-color: var(--sr-paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-variant-ligatures: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.017em;
+}
+
+/* theme-classic re-declares the heading tokens INSIDE .markdown (h1 3rem,
+   h2 2rem, h3 1.5rem), so setting them on :root does nothing to page content.
+   These have to be overridden at the same selector or the scale stays shouty
+   and an h2 ends up nearly the size of the h1 above it. */
+.markdown h1:first-child {
+  --ifm-h1-font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.markdown > h2 {
+  --ifm-h2-font-size: 1.5rem;
+  margin-top: 2.75rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid color-mix(in srgb, var(--sr-accent) 30%, var(--sr-line-soft));
+}
+
+/* Bold text needs to snag the eye while scanning — weight alone doesn't do
+   it against a body font this light. Colour was the wrong channel: green
+   text reads as a link with no underline, which is worse than no signal at
+   all. A highlighter background is a different channel entirely — it can't
+   be mistaken for "click me" — and it reuses the same warm stop the search
+   plugin already uses for match highlighting, so the page has exactly one
+   "attention" colour, not two competing ones. */
+:root .markdown strong {
+  background: var(--sr-mark);
+  padding: 0.05em 0.3em;
+  margin: 0 -0.3em;
+  border-radius: 3px;
+}
+
+[data-theme='dark'] .markdown strong {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.markdown > h3 {
+  --ifm-h3-font-size: 1.1875rem;
+}
+
+.markdown > h2:first-child,
+.markdown > h1 + h2 {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 1.5rem;
+}
+
+/* Long-form measure. Tables and code still fill the column. */
+.theme-doc-markdown.markdown {
+  max-width: 58rem;
+}
+
+/* Links carry an underline in both modes. In dark there is no hue to spend on
+   them, so the underline is the entire affordance — it is not decoration. */
+.markdown a:not(.card):not(.button) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, currentColor 38%, transparent);
+  font-weight: 500;
+}
+
+.markdown a:not(.card):not(.button):hover {
+  text-decoration-color: currentColor;
+}
+
+/* -------------------------------------------------------------- navbar */
+.navbar {
+  backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--sr-line);
+}
+
+.navbar__title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+}
+
+.navbar__link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* The one button in the header. Bone on graphite, green on paper — the same
+   rule the dashboard uses for a primary action. */
+.navbar__item--cta {
+  border: 1px solid var(--sr-accent);
+  background: var(--sr-accent);
+  color: var(--sr-on-accent) !important;
+  border-radius: 7px;
+  padding: 0.3125rem 0.75rem;
+  margin-left: 0.375rem;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.navbar__item--cta:hover {
+  background: var(--sr-accent-strong);
+  border-color: var(--sr-accent-strong);
+}
+
+/* -------------------------------------------------------------- sidebar */
+.theme-doc-sidebar-container {
+  border-right: 1px solid var(--sr-line) !important;
+}
+
+.menu {
+  padding: 1rem 0.75rem !important;
+  font-size: 0.9375rem;
+}
+
+.menu__link {
+  border-radius: 6px;
+  line-height: 1.35;
+  padding: 0.4375rem 0.625rem;
+}
+
+.menu__link--active:not(.menu__link--sublist) {
+  font-weight: 600;
+  color: var(--sr-accent-strong);
+  background: var(--sr-accent-tint);
+  box-shadow: inset 2px 0 0 var(--sr-accent);
+}
+
+.menu__list-item-collapsible .menu__link {
+  font-weight: 600;
+  color: var(--sr-fg);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Product names opt out of the caps: `n8n` is lowercase, always (the vendor writes it
+   that way). Applied via `className` in the section's _category_.json. */
+.sr-nav-nocaps > .menu__list-item-collapsible .menu__link,
+.sr-nav-nocaps.menu__list-item-collapsible .menu__link {
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.menu__list .menu__list {
+  padding-left: 0.5rem;
+  margin-left: 0.375rem;
+  border-left: 1px solid var(--sr-line);
+}
+
+/* ------------------------------------------------------ tables & prose */
+.markdown table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--sr-line);
+  border-radius: var(--ifm-global-radius);
+  overflow: hidden;
+  font-size: 0.9375rem;
+}
+
+.markdown table thead tr {
+  border-bottom: 1px solid var(--sr-line);
+  background: var(--sr-accent-tint);
+}
+
+/* Several pages write two-column term/definition tables with an empty header
+   row (`| | |`), which renders as a blank grey bar that reads as a bug. Hide
+   the head only when every cell in it is genuinely empty. */
+.markdown table thead:not(:has(th:not(:empty))) {
+  display: none;
+}
+
+.markdown table th {
+  font-weight: 600;
+  color: var(--sr-fg);
+  text-align: left;
+}
+
+.markdown table th,
+.markdown table td {
+  border: 0;
+  border-bottom: 1px solid var(--sr-line-soft);
+  padding: 0.625rem 0.875rem;
+  vertical-align: top;
+}
+
+.markdown table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Any table wider than the column scrolls itself; the page never does. */
+.markdown .table-wrapper,
+.markdown table {
+  overflow-x: auto;
+}
+
+/* These pages use a blockquote for the one sentence the page exists to say
+   ("We keep your instance running. You own what runs inside it."). Infima
+   greys it out by default, which is exactly backwards. */
+/* Screenshots. The dashboard is near-black, so on paper a bare image bleeds off
+   into the page with no edge. The frame is what makes it read as "a picture of
+   a screen" rather than a hole.
+
+   The height cap is what keeps the page readable. A portrait shot — the signup
+   card is 892x1536 — rendered at column width is over 1300px tall and turns one
+   sentence into a full screen of scrolling. `max-height` with `width: auto`
+   only bites on tall images: the landscape wizard shots come in around 410px
+   tall at this width and are left alone. */
+.markdown img {
+  display: block;
+  max-width: 100%;
+  max-height: 40rem;
+  width: auto;
+  height: auto;
+  border: 1px solid var(--sr-line);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--sr-shadow-card);
+  margin: 1.75rem auto;
+}
+
+.markdown blockquote {
+  border-left-width: 2px;
+  border-left-color: var(--sr-accent);
+  background: var(--sr-paper-alt);
+  border-radius: 0 var(--ifm-global-radius) var(--ifm-global-radius) 0;
+  padding: 0.875rem 1.125rem;
+  color: var(--sr-fg);
+  font-size: 1.0625rem;
+}
+
+.markdown blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.theme-code-block {
+  border: 1px solid var(--sr-line);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: none !important;
+}
+
+code {
+  border: 1px solid var(--sr-line-soft);
+}
+
+/* Admonitions are the one place chroma is allowed, because there it means
+   status. Flattened onto the warm ground so they read as part of the page. */
+.theme-admonition {
+  border-radius: var(--ifm-global-radius);
+  border-width: 1px;
+  border-left-width: 3px;
+  box-shadow: none;
+}
+
+/* ----------------------------------------------------- home + card grids */
+.sr-home__intro {
+  max-width: 44rem;
+  margin-bottom: 2.5rem;
+}
+
+.sr-home__intro h1 {
+  font-size: clamp(2rem, 1.4rem + 2vw, 2.75rem);
+  margin-bottom: 0.875rem;
+}
+
+.sr-home__intro p {
+  font-size: 1.0625rem;
+  color: var(--sr-fg-mute);
+  margin-bottom: 0;
+}
+
+.sr-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.875rem;
+  margin: 1.25rem 0 2.5rem;
+}
+
+/* Exactly three, always on one row where there is room — auto-fit dropped the
+   third to its own line at the width the sidebar leaves at 1280px. */
+.sr-cards--lead {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sr-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1.125rem 1.25rem;
+  background: var(--sr-card);
+  border: 1px solid var(--sr-line);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--sr-shadow-card);
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: border-color 130ms ease, box-shadow 130ms ease,
+    transform 130ms ease;
+}
+
+.sr-card:hover {
+  border-color: var(--sr-fg-mute);
+  box-shadow: var(--sr-shadow-lift);
+  transform: translateY(-1px);
+}
+
+.sr-card__kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--sr-accent);
+}
+
+.sr-card__title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--sr-fg);
+  letter-spacing: -0.012em;
+}
+
+.sr-card__body {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--sr-fg-mute);
+}
+
+.sr-cards--lead .sr-card {
+  padding: 1.375rem 1.375rem 1.5rem;
+}
+
+/* Docusaurus's own generated-index cards, brought onto the same grid so a
+   section landing page and the home page look like one site. */
+article .card,
+.card {
+  background: var(--sr-card);
+  border: 1px solid var(--sr-line);
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--sr-shadow-card) !important;
+  transition: border-color 130ms ease, box-shadow 130ms ease;
+}
+
+article .card:hover,
+.card:hover {
+  border-color: var(--sr-fg-mute);
+  box-shadow: var(--sr-shadow-lift) !important;
+}
+
+/* Stock DocCards print a lavender 📄 / 🗃 emoji beside every title. It is the
+   single most "default Docusaurus" mark on the page and it is the only chroma
+   here that means nothing, so it goes. Hidden rather than swizzled: this is a
+   stable theme class, an ejected component is not. */
+.theme-doc-card-icon {
+  display: none;
+}
+
+/* The stock heading is an inline-flex `text--truncate`, so "Choosing a hosting
+   option" renders as "Choosing a hosting o…". Titles wrap. */
+.theme-doc-card-heading,
+.theme-doc-card-title {
+  font-size: 1.0625rem !important;
+  line-height: 1.3;
+  margin-bottom: 0.375rem;
+  display: block !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+
+/* The stock description is `text--truncate`, i.e. one line with an ellipsis,
+   which cuts most of these sentences mid-word. Two lines, then clamp. */
+.theme-doc-card-description {
+  white-space: normal !important;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--sr-fg-mute);
+}
+
+article .card.padding--lg {
+  padding: 1.125rem 1.25rem !important;
+}
+
+/* Section landing pages ship a 12-column float grid at col--6, so five cards
+   render as 2 + 2 + 1 with a hole. Same auto-fit grid as the home page. */
+main section.row:has(.theme-doc-card-container) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.875rem;
+  margin: 1.5rem 0 0;
+}
+
+main section.row:has(.theme-doc-card-container) > .col {
+  max-width: 100%;
+  flex: initial;
+  padding: 0;
+  margin-bottom: 0 !important;
+}
+
+/* --------------------------------------------------------------- footer */
+.footer {
+  border-top: 1px solid var(--sr-line);
+  background: var(--sr-paper-alt);
+  --ifm-footer-padding-vertical: 3rem;
+}
+
+.footer__title {
+  font-size: 0.75rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--sr-fg-mute);
+}
+
+.footer__link-item {
+  font-size: 0.9375rem;
+}
+
+.footer__copyright {
+  font-size: 0.8125rem;
+  color: var(--sr-fg-mute);
+}
+
+/* --------------------------------------------------------------- search */
+.DocSearch-Button,
+.navbar__search-input {
+  border-radius: 7px;
+  border: 1px solid var(--sr-line);
+  background: var(--sr-paper-alt);
+}
+
+/* The search plugin hashes its class names, so match on the stable prefix
+   rather than the hash — `searchQueryInput_CFBF` will change on upgrade. */
+[class*='searchQueryInput'] {
+  border: 1px solid var(--sr-line) !important;
+  border-radius: var(--ifm-global-radius) !important;
+  background: var(--sr-card) !important;
+  color: var(--sr-fg) !important;
+  font-family: var(--ifm-font-family-base) !important;
+  font-size: 1rem;
+  padding: 0.625rem 0.875rem;
+}
+
+[class*='searchQueryInput']:focus {
+  outline: 2px solid var(--sr-accent);
+  outline-offset: 1px;
+  border-color: var(--sr-accent) !important;
+}
+
+[class*='searchResultItemPath'] {
+  font-size: 0.8125rem;
+  color: var(--sr-fg-mute);
+}
+
+[class*='searchResultItemSummary'] {
+  color: var(--sr-fg-body);
+  font-style: normal;
+  font-size: 0.9375rem;
+}
+
+/* Result highlighting is the browser's raw #ff0 on a warm ground. Keep the
+   convention — a hit really is "attention", the one job colour has here — but
+   pitch it to the palette instead of screaming. */
+mark {
+  background: var(--sr-mark);
+  color: inherit;
+  padding: 0 0.12em;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------ pagination */
+.pagination-nav__link {
+  border-color: var(--sr-line);
+  border-radius: var(--ifm-global-radius);
+}
+
+.pagination-nav__sublabel {
+  color: var(--sr-fg-mute);
+}
+
+/* ---------------------------------------------------------- breadcrumbs */
+.breadcrumbs__item:not(:last-child) .breadcrumbs__link {
+  color: var(--sr-fg-mute);
+  background: transparent;
+}
+
+/* ------------------------------------------------------------------- toc */
+.table-of-contents {
+  font-size: 0.8125rem;
+  border-left-color: var(--sr-line);
+}
+
+.table-of-contents__link--active {
+  font-weight: 600;
+  color: var(--sr-accent-strong);
+}
+
+@media (max-width: 996px) {
+  .sr-cards,
+  .sr-cards--lead {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── App marks ────────────────────────────────────────────────────────────
+   Simple lettered tiles, not vendor logos. */
+:root {
+  --sr-app-n8n-tone: #fdece3;
+  --sr-app-n8n-ink: #b4491d;
+}
+[data-theme='dark'] {
+  --sr-app-n8n-tone: #3a241c;
+  --sr-app-n8n-ink: #f38b58;
+}
+
+.sr-app-mark {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant-ligatures: none;
+}
+.sr-app-mark--n8n {
+  background: var(--sr-app-n8n-tone);
+  color: var(--sr-app-n8n-ink);
+}
+
+/* The sidebar category rows. */
+.sr-app > .menu__list-item-collapsible > .menu__link::before {
+  content: attr(data-sr-mark);
+  display: inline-grid;
+  place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  margin-right: 0.5rem;
+  border-radius: 0.3125rem;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  vertical-align: -0.3rem;
+}
+.sr-app--n8n > .menu__list-item-collapsible > .menu__link::before {
+  content: 'n8n';
+  background: var(--sr-app-n8n-tone);
+  color: var(--sr-app-n8n-ink);
+}
+
+/* The n8n card on the generated /apps index. */
+article > a[href$='/apps/n8n'] h2::before {
+  content: 'n8n';
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-right: 0.5rem;
+  border-radius: 0.4375rem;
+  font-size: 0.5625rem;
+  font-weight: 700;
+  vertical-align: -0.4rem;
+  background: var(--sr-app-n8n-tone);
+  color: var(--sr-app-n8n-ink);
+}

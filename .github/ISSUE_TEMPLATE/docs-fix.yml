@@ -1,0 +1,31 @@
+name: Docs fix
+description: A mistake, gap or unclear passage in the documentation.
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Text you write here is offered under CC BY 4.0 (see CONTRIBUTING.md). Only send text you may share.
+        Do not include secrets or personal data.
+  - type: input
+    id: page
+    attributes:
+      label: Page or file
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong or unclear
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested wording (optional)
+  - type: checkboxes
+    id: licence
+    attributes:
+      label: Licence
+      options:
+        - label: I wrote the suggested text myself and offer it under CC BY 4.0.

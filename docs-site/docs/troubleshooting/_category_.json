@@ -1,0 +1,10 @@
+{
+  "label": "Troubleshooting",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "slug": "/troubleshooting",
+    "title": "Troubleshooting",
+    "description": "Symptom first. Find the page that matches what you are seeing, not the subsystem it lives in."
+  }
+}

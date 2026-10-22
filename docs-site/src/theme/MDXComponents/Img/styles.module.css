@@ -1,0 +1,31 @@
+/* Portions derived from Docusaurus, Copyright (c) Facebook, Inc. and its affiliates.
+   Used under the MIT License (full notice in the NOTICE file at the repository root).
+   Modifications by SpliceRun are licensed under Apache-2.0. */
+/* Matches the upstream component this was swizzled from. */
+.img {
+  height: auto;
+}
+
+/* The link must not look like a link — no underline, no colour — but it does
+   need to say "this opens". The cursor is the affordance on a pointer device;
+   the hover lift is what tells a mouse user before they click. */
+.zoomLink {
+  display: block;
+  cursor: zoom-in;
+  text-decoration: none !important;
+  border-radius: var(--ifm-global-radius);
+}
+
+.zoomLink img {
+  transition: border-color 130ms ease, box-shadow 130ms ease;
+}
+
+.zoomLink:hover img {
+  border-color: var(--sr-fg-mute);
+  box-shadow: var(--sr-shadow-lift);
+}
+
+.zoomLink:focus-visible {
+  outline: 2px solid var(--sr-accent);
+  outline-offset: 3px;
+}

@@ -1,0 +1,62 @@
+name: public-ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  docs-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      # actions/checkout v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      # Lightweight pattern check only. It looks for three things and nothing else:
+      #   1. private-key header lines,
+      #   2. IPv4-looking strings outside the documentation ranges,
+      #   3. email addresses other than support@splicerun.com, example domains and GitHub noreply
+      #      addresses,
+      # plus, in the lockfile, any resolved download URL not on registry.npmjs.org.
+      # It does not detect secrets in general, personal data, or private content.
+      - name: Lightweight pattern check (not a full secret scan)
+        run: |
+          set -u
+          fail=0
+          lock=docs-site/package-lock.json
+          # git grep reads tracked text files only (binary files are skipped).
+          scan() { git grep -I -h "$@" -- . ":(exclude)$lock" || true; }
+          if git grep -I -nE -- '-----BEGIN [A-Z ]*PRIVATE KEY-----' -- . ":(exclude)$lock"; then
+            echo "::error::private key header found"; fail=1
+          fi
+          ip=$(scan -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | grep -vE '^(192\.0\.2|198\.51\.100|203\.0\.113)\.[0-9]+$|^(127\.0\.0\.1|0\.0\.0\.0|1\.1\.1\.1|8\.8\.8\.8)$' || true)
+          if [ -n "$ip" ]; then echo "::error::IPv4 address outside documentation ranges:"; echo "$ip"; fail=1; fi
+          mail=$(scan -oiE '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}' | grep -viE '^support@splicerun\.com$|@example\.(com|org|net)$|@users\.noreply\.github\.com$' || true)
+          if [ -n "$mail" ]; then echo "::error::unexpected email address:"; echo "$mail"; fail=1; fi
+          # Lockfile: every resolved URL must be on registry.npmjs.org.
+          if [ -f "$lock" ]; then
+            bad=$(grep -oE '"resolved": *"[^"]*"' "$lock" | grep -vE '"resolved": *"https://registry\.npmjs\.org/' || true)
+            if [ -n "$bad" ]; then echo "::error::lockfile URL not on registry.npmjs.org:"; echo "$bad"; fail=1; fi
+          else
+            echo "::error::$lock is missing"; fail=1
+          fi
+          exit $fail
+
+      # actions/setup-node v7.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          # Node 24 (Krypton): LTS, supported to 2028-04-30; satisfies engines (>=22.0).
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: docs-site/package-lock.json
+
+      - name: Build the documentation site
+        working-directory: docs-site
+        run: |
+          npm ci
+          npm run build

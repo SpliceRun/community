@@ -1,0 +1,11 @@
+{
+  "label": "n8n",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "slug": "/apps/n8n",
+    "title": "n8n",
+    "description": "Workflow automation, on Shared, Dedicated or your own server. Getting an existing n8n in, getting your data out, and the two things that most often go wrong."
+  },
+  "className": "sr-nav-nocaps sr-app sr-app--n8n"
+}

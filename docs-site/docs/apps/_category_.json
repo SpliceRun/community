@@ -1,0 +1,10 @@
+{
+  "label": "Apps",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "slug": "/apps",
+    "title": "Apps",
+    "description": "The applications SpliceRun runs for you. Everything outside this section - plans, billing, networking, security - works the same whichever app you pick; everything specific to one app lives under that app."
+  }
+}
