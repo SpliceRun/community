@@ -17,7 +17,7 @@ This repository is a curated export. It is not the source code of SpliceRun, and
 
 - The SpliceRun platform source code (backend, dashboard, workers, billing, support tooling). It is proprietary.
 - Customer data, credentials, infrastructure details and internal operations notes.
-- Logos. No SpliceRun logo is shipped in this repository.
+- Logos. The SpliceRun logo is in `brand/`; it is covered by `BRAND.md`, not by the general licences.
 - Any promise that the hosted platform is, or will become, open source.
 
 ## Using the hosted service

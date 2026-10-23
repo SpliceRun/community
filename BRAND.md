@@ -2,7 +2,7 @@
 
 This is a separate, narrow permission. It is not a general licence, and the SpliceRun logo and brand assets are NOT covered by Apache-2.0, CC BY 4.0 or any other licence in this repository.
 
-No SpliceRun logo is included in this release. This file states the permission that will apply if brand assets are added later.
+The SpliceRun logo files are in the `brand/` folder: `splicerun-logo-black.png` (the full logo) and `splicerun-icon-512.png` (the icon). They were designed by the owner. This file states the permission that applies to them.
 
 ## What you may do
 
