@@ -40,7 +40,7 @@ Please read `CONTRIBUTING.md`. In short: open an issue. Use the "Bug" or "Docs f
 
 ## Maintainer absence notice
 
-Maintenance is intermittent; issue replies have no guaranteed timeframe.
+Issue replies are best-effort; no response time is promised.
 
 - Use issues only. Outside pull requests are disabled for now.
 - There is no response-time promise of any kind. A quiet issue is not a rejected issue.
