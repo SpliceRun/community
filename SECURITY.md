@@ -12,7 +12,7 @@ Include what you found, where, and how to see it. Do not include real customer d
 ## What to expect
 
 - The maintainer is the repository owner. There is no security team.
-- The maintainer may be away for extended periods. Replies may be slow or may not come until he is back.
+- Replies are best-effort and no response time is promised.
 - No response time is promised. No bug bounty, payment or credit is promised.
 - This repository holds documentation and examples. If the problem is in the hosted platform at https://app.splicerun.com, say so; that platform is proprietary and is handled separately.
 

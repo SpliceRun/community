@@ -8,6 +8,6 @@ This is a small space. The rules are simple.
 - Do not share other people's private information, and do not post your own secrets.
 - No spam, advertising or off-topic posts.
 
-The maintainer may edit, hide or delete content and may block people who break these rules. Because maintenance is intermittent, this can take a while.
+The maintainer may edit, hide or delete content and may block people who break these rules. Moderation is best-effort and no response time is promised.
 
 To report conduct problems, email support@splicerun.com with the subject line `CONDUCT`.

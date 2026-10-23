@@ -6,7 +6,7 @@ Thank you for looking. This is a small export from a private product, so the rul
 
 - Open an issue using the "Bug" or "Docs fix" form. Problems in the files under `examples/` (a command that fails, a wrong setting, an outdated image tag) are reported the same way: name the example folder, your operating system and Docker version, and the exact command and error. Do not paste your `.env`.
 - Outside pull requests are disabled for now. Please do not open them.
-- Maintenance is intermittent; issue replies have no guaranteed timeframe.
+- Issue replies are best-effort; no response time is promised.
 - Do not put secrets, personal data or customer data in an issue. Security problems go to `SECURITY.md`, not to a public issue.
 
 ## When pull requests reopen
