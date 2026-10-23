@@ -1,0 +1,11 @@
+{
+  "label": "Hermes Agent",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "/apps/hermes",
+    "title": "Hermes Agent",
+    "description": "An introduction to Hermes Agent, built by Nous Research: upstream resource guidance, choosing a model, connecting Telegram, and an index of its features."
+  },
+  "className": "sr-nav-nocaps"
+}
