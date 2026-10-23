@@ -6,21 +6,13 @@ sidebar_position: 3
 
 # Choose your model
 
-**If your agent is installed, set up, and takes minutes to answer or never answers, change the
-model first.** It is the most common cause by a wide margin, and it is a one-field change on your
-agent, on Hermes' own **Models** page, under the bot you mean.
+If your agent responds slowly or does not answer, try another model and compare. It is a one-field change on Hermes' own **Models** page, under the bot you mean.
 
 ## How to tell with one message
 
-Open your agent at its web address and send it one short message: `Reply with the single word
-pong.` Count.
+Open your agent at its web address and send it one short message: `Reply with the single word pong.`
 
-- **Under ten seconds:** the model is answering normally.
-- **Over a minute, or nothing:** try another model on Hermes' **Models** page before reinstalling or changing your server.
-
-If you want a second opinion before you switch, the model's own page on openrouter.ai lists the
-providers serving it with their latency and throughput. A model with one provider and a long
-latency figure is likely to be slow for your agent too.
+If it does not answer, try another model and repeat the same message.
 
 ## Changing the model later
 

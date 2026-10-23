@@ -15,11 +15,8 @@ In Telegram, message **@BotFather** and send `/newbot`. Answer its two questions
 gives you a token that looks like `123456789:AA...`. Copy the whole line.
 
 :::warning[Do not reuse a bot that is already running somewhere]
-Telegram delivers each message to **exactly one** program. If this bot is already connected to
-something else, another tool, an old script, a test on your laptop, then whichever one asks first
-gets the message and the other gets nothing. Nothing in the chat tells you this is happening.
+Do not reuse the same bot token in multiple running gateways; concurrent polling can cause conflicts. Create a fresh bot for this agent.
 
-Create a fresh bot for your agent. It avoids a problem that is hard to see from the outside.
 :::
 
 ## Step 2: find your Telegram user ID
@@ -38,9 +35,7 @@ agent answers nobody.
 **Use the profile switcher at the top left first** if your instance runs more than one bot. A token
 entered under one bot is not visible to another; keys and channels do not cross profiles.
 
-**Only the IDs you add get answers.** Anyone else who finds the bot and messages it gets no reply:
-not an error, not a refusal, nothing. That is the intended behaviour, and it is worth knowing so you
-do not read silence as a broken agent.
+The allowed-user list restricts who can interact with the bot. If access is denied, check that the numeric user ID is listed.
 
 ## Changing or removing it later
 

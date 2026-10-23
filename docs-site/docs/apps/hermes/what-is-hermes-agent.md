@@ -6,9 +6,7 @@ sidebar_position: 1
 
 # What Hermes Agent is
 
-Hermes Agent is an AI agent that runs on **your own server**. You give it a key from a model
-provider, you talk to it through its own web dashboard or through Telegram, and it works on your
-behalf, including browsing the web and running scheduled tasks.
+Hermes Agent can browse the web and run scheduled tasks when the required tools are configured.
 
 Hermes Agent is built by Nous Research. SpliceRun provides managed hosting for it. The SpliceRun hosted platform is not open source.
 
