@@ -1,0 +1,67 @@
+# Example: Hermes Agent (gateway + web dashboard, one container) -- provided as-is, without warranty.
+# Unofficial example. Hermes Agent is made by Nous Research (MIT licence).
+# Start: copy .env.example to .env, fill in the required values, then `docker compose up -d`.
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  hermes:
+    # Pinned version tag (multi-arch: amd64 and arm64). See "Image versions" in the README.
+    image: nousresearch/hermes-agent:v0.22.5
+    restart: unless-stopped
+    command: gateway run
+    # Give a running task time to finish on stop/upgrade (Docker's default is 10 s).
+    stop_grace_period: 60s
+    environment:
+      # --- Your own model key (REQUIRED). Compose stops with this message if it is empty. ---
+      # OpenRouter is used as the example. For another provider, replace this line with that
+      # provider's variable (for example ANTHROPIC_API_KEY) and change the check below and the matching line in .env.example.
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:?Set OPENROUTER_API_KEY in .env (your own model provider key)}
+      # --- Web dashboard. The container binds it on all container interfaces, which makes
+      # Hermes require a login; it refuses to start without one. ---
+      HERMES_DASHBOARD: "1"
+      HERMES_DASHBOARD_BASIC_AUTH_USERNAME: ${DASHBOARD_USERNAME:?Set DASHBOARD_USERNAME in .env}
+      HERMES_DASHBOARD_BASIC_AUTH_PASSWORD: ${DASHBOARD_PASSWORD:?Set DASHBOARD_PASSWORD in .env}
+      HERMES_DASHBOARD_BASIC_AUTH_SECRET: ${DASHBOARD_SESSION_SECRET:?Set DASHBOARD_SESSION_SECRET in .env}
+      # --- Internal API server: used here only for the health check. It listens on the
+      # container's own loopback (the default) and no port is published for it. ---
+      API_SERVER_ENABLED: "true"
+      API_SERVER_KEY: ${API_SERVER_KEY:?Set API_SERVER_KEY in .env}
+      TZ: ${TZ:-UTC}
+    ports:
+      # Loopback only. Reach it from another machine with an SSH tunnel (see README).
+      - "127.0.0.1:${HOST_PORT:-9119}:9119"
+    volumes:
+      # Everything Hermes keeps (config, keys, sessions, memories, skills) lives here.
+      - hermes_data:/opt/data
+    # Upstream recommends this for browser tools (Playwright shared memory).
+    shm_size: 1g
+    # Upstream's example limits for a 4 GB machine; adjust to your machine.
+    mem_limit: 4g
+    cpus: 2.0
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      # The image starts as root only to fix ownership of the data volume, then runs as the
+      # unprivileged "hermes" user (UID 10000). These are what that step is expected to need.
+      # Verified by one run on arm64 with image v0.22.5 (see the test record in the README).
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8642/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+    logging: *default-logging
+
+volumes:
+  hermes_data:
