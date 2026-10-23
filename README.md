@@ -7,7 +7,7 @@ This repository is a curated export. It is not the source code of SpliceRun, and
 ## What is in here
 
 - `docs-site/` : the public documentation site sources (documentation text CC BY 4.0; site code and configuration Apache-2.0).
-- `examples/` : self-hosting examples (Docker Compose files, example settings and a README each) for n8n, Activepieces, Automatisch, Huginn and Node-RED, plus a generic Caddy HTTPS reverse-proxy example. Original files are Apache-2.0. Each upstream app keeps its own licence; no upstream code is included, the files only name the upstream images. See `examples/<app>/README.md`.
+- `examples/` : self-hosting examples (Docker Compose files, example settings and a README each) for n8n, Activepieces, Automatisch, Huginn, Node-RED and Hermes Agent (an unofficial example for the open-source project by Nous Research), plus a generic Caddy HTTPS reverse-proxy example. Original files are Apache-2.0. Each upstream app keeps its own licence; no upstream code is included, the files only name the upstream images. See `examples/<app>/README.md`.
 - Font files used by the documentation (Geist, under `docs-site/static/fonts/`), shipped with their SIL OFL 1.1 licence text. `fonts/geist/` holds a copy of that licence text.
 - Legal and community files: `LICENSE`, `LICENSE-docs`, `LICENSES.md`, `NOTICE`, `BRAND.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`.
 
@@ -26,7 +26,7 @@ The hosted service at https://app.splicerun.com is in early access and currently
 
 ## Examples
 
-`examples/` has one folder per app: `n8n`, `activepieces`, `automatisch`, `huginn`, `node-red`, and `caddy` (a generic HTTPS reverse proxy for any of them). Each folder has a `compose.yaml`, a `.env.example` and a README with start, stop, upgrade and backup steps.
+`examples/` has one folder per app: `n8n`, `activepieces`, `automatisch`, `huginn`, `node-red`, `hermes-agent`, and `caddy` (a generic HTTPS reverse proxy for any of them). Each folder has a `compose.yaml`, a `.env.example` and a README with start, stop, upgrade and backup steps. The Hermes Agent example was tested separately on 2026-10-23; its README has its own test record.
 
 What was tested: on 2026-10-22, on Docker Desktop on macOS (Apple silicon, arm64), each app was started with a throwaway `.env` of dummy values, its front page answered, and data kept in the volumes was still there after a stop/start and a down/up. Caddy was only checked with `caddy validate` and as a plain-HTTP proxy in front of Node-RED. Nothing more was tested: no workflows or flows were run, and there was no HTTPS, no upgrade, no restore and no run on a Linux server. Each example README states exactly what was run. The examples are provided as-is, without warranty, and are not a claim of production readiness. Read the files and try them on a throwaway machine first.
 
