@@ -11,7 +11,7 @@ Different parts of this repository are under different licences. This file says 
 | Original files in `examples/` (compose files, `.env.example`, `Caddyfile`, `settings.js` and the example READMEs) | Apache-2.0 | `LICENSE` |
 | The apps the examples deploy (no upstream code is redistributed here; the files only name upstream container images) | Each app keeps its own licence, listed below | The upstream project's own licence text |
 | npm dependencies | Each keeps its own licence | Not redistributed here; they are only locked by name, version and checksum in `docs-site/package-lock.json` and are downloaded from the npm registry when you install them |
-| SpliceRun logos and brand assets | Not licensed; a separate narrow permission | `BRAND.md` (no SpliceRun logo is included in this release) |
+| SpliceRun logos and brand assets | Not licensed; a separate narrow permission | `BRAND.md` (the logo files are in `brand/`) |
 
 ## Licences of the apps named in the examples
 
