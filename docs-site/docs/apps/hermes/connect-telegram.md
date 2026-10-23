@@ -23,14 +23,12 @@ Do not reuse the same bot token in multiple running gateways; concurrent polling
 
 Message **@userinfobot** in Telegram. It replies with your numeric user ID.
 
-**It has to be the number.** An `@username` matches nobody, and the result is an agent that refuses
-to talk to you, including you.
+**Use your numeric Telegram user ID, not your @username.**
 
 ## Step 3: add the bot in Hermes
 
 Open Hermes Agent, go to **Channels**, and add Telegram there. Give it the bot token BotFather gave you and the numeric
-user IDs from step 2 of everyone the agent should answer. Add at least your own: with no IDs, the
-agent answers nobody.
+user IDs from step 2 of everyone the agent should answer. Add at least your own numeric user ID to allow yourself access.
 
 **Use the profile switcher at the top left first** if your instance runs more than one bot. A token
 entered under one bot is not visible to another; keys and channels do not cross profiles.
